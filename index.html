@@ -53,7 +53,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 10002;
             text-align: center;
         }
 
@@ -111,7 +111,7 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 10003;
             backdrop-filter: blur(4px);
             box-shadow: 0 0 20px var(--purple), 0 0 40px var(--purple-l);
             display: flex;
@@ -131,8 +131,8 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: 
-                radial-gradient(circle at 10% 20%, rgba(123, 44, 191, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(157, 78, 221, 0.15) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(123, 44, 191, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(157, 78, 221, 0.1) 0%, transparent 40%);
             z-index: 1;
             pointer-events: none;
         }
@@ -513,7 +513,7 @@
             <div class="faq reveal" style="max-width: 800px; margin: 0 auto;">
                 <div class="faq-item">
                     <div class="faq-question">Atendimento Personalizado? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">Sim, cada cliente MKS possui um consultor técnico dedicado disponível para chamados prioritários.</div>
+                    <div class="faq-answer">Sim, cada cliente MKS possui um consultor técnico dedicado disponível para chamados prioritários via WhatsApp ou Meet.</div>
                 </div>
             </div>
         </section>
@@ -534,8 +534,8 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.onload = () => img.classList.add('loaded');
                     img.src = img.getAttribute('src');
+                    img.onload = () => img.classList.add('loaded');
                     observer.unobserve(img);
                 }
             });
@@ -560,9 +560,9 @@
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.4;
             }
             update() {
                 this.x += this.speedX; this.y += this.speedY;
@@ -573,7 +573,7 @@
                 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
         
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -605,8 +605,8 @@
             });
 
             const renderCursor = () => {
-                cursorX += (mouseX - cursorX) * 0.1;
-                cursorY += (mouseY - cursorY) * 0.1;
+                cursorX += (mouseX - cursorX) * 0.15;
+                cursorY += (mouseY - cursorY) * 0.15;
                 cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
                 requestAnimationFrame(renderCursor);
             };
@@ -621,13 +621,12 @@
         // --- INTRO SEQUENCE ---
         window.addEventListener('load', () => {
             const tl = gsap.timeline();
-            tl.from(".welcome-text-small", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" })
-              .from(".welcome-text-main", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
-              .from(".welcome-text-modern", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
-              .to("#introLoader", { width: "100%", duration: 1.2, ease: "power2.inOut" })
-              .to(["#intro span", "#introLoader"], { y: -30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power4.in" })
-              .to("#intro", { y: "-100%", duration: 1, ease: "expo.inOut" })
-              .to("#main-nav", { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, "-=0.4")
+            tl.from(".welcome-text-small", { y: 30, opacity: 0, duration: 0.8, ease: "power4.out" })
+              .from(".welcome-text-main", { y: 30, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
+              .from(".welcome-text-modern", { y: 30, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
+              .to("#introLoader", { width: "100%", duration: 1, ease: "power2.inOut" })
+              .to("#intro", { y: "-100%", duration: 1.2, ease: "expo.inOut" })
+              .to("#main-nav", { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, "-=0.6")
               .to("#content", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.2, ease: "power4.out", onComplete: () => {
                   document.body.style.overflow = "auto";
                   initScrollAnimations();
@@ -652,9 +651,9 @@
                     end: "bottom top", 
                     scrub: true 
                 },
-                y: 150, 
+                y: 100, 
                 rotationY: 180,
-                scale: 0.7
+                scale: 0.8
             });
         }
 
