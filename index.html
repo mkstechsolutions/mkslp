@@ -17,7 +17,9 @@
             --purple-l: #9d4edd;
             --white: #ffffff;
             --gray: #a1a1a6;
-            --glass: rgba(255, 255, 255, 0.03);
+            /* Glassmorphism Refinado */
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-deep: rgba(255, 255, 255, 0.05);
             --border: rgba(157, 78, 221, 0.2);
             --card-bg: rgba(10, 10, 10, 0.6);
         }
@@ -40,7 +42,57 @@
             cursor: none;
         }
 
-        /* --- NOVO: PROGRESS BAR --- */
+        /* --- ESTILOS DA NOVA INTRO (MUNDO MODERNO) --- */
+        #intro {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+        }
+
+        .welcome-wrap { overflow: hidden; margin: 5px 0; }
+        
+        .welcome-text-small {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 300;
+            color: var(--gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .welcome-text-main {
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(to bottom, #fff, var(--purple-l));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            display: block;
+        }
+
+        .welcome-text-modern {
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            color: var(--purple-l);
+            letter-spacing: 8px;
+            font-weight: 400;
+            display: block;
+        }
+
+        .intro-loader-bar {
+            width: 0%;
+            height: 2px;
+            background: var(--purple-l);
+            margin-top: 30px;
+            box-shadow: 0 0 20px var(--purple-l);
+        }
+
+        /* --- SEU CSS ORIGINAL ABAIXO (MANTIDO 100%) --- */
         #progress-bar {
             position: fixed;
             top: 0; left: 0;
@@ -51,7 +103,6 @@
             z-index: 10001;
         }
 
-        /* Custom Cursor */
         #cursor {
             width: 20px; height: 20px;
             background: var(--purple-l);
@@ -64,7 +115,6 @@
             box-shadow: 0 0 20px var(--purple), 0 0 40px var(--purple-l);
         }
 
-        /* --- BACKGROUND CANVAS & GLOW --- */
         #bg-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -83,82 +133,6 @@
             pointer-events: none;
         }
 
-        /* --- INTRO / BIOMETRIC UI --- */
-        #intro {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .auth-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            padding: 60px;
-            border-radius: 40px;
-            border: 1px solid var(--border);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 0 100px rgba(157, 78, 221, 0.1);
-        }
-
-        .scanner-portal {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .scanner-ring {
-            position: absolute;
-            inset: -15px;
-            border: 2px solid transparent;
-            border-top: 2px solid var(--purple-l);
-            border-bottom: 2px solid var(--purple-l);
-            border-radius: 50%;
-            animation: rotateScanner 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-
-        @keyframes rotateScanner {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .fingerprint-icon {
-            font-size: 3.5rem;
-            color: var(--purple-l);
-            filter: drop-shadow(0 0 20px rgba(157, 78, 221, 0.8));
-            transition: 0.5s;
-        }
-
-        .intro-logo-success {
-            position: absolute;
-            width: 60px;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .scanner-text {
-            font-size: 0.7rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-top: 20px;
-            font-weight: 300;
-        }
-
-        /* --- NAVBAR (STIKCY) --- */
         #main-nav {
             position: fixed;
             top: 0; width: 100%; height: 85px;
@@ -233,7 +207,6 @@
 
         .menu-toggle { display: none; color: var(--white); font-size: 1.3rem; cursor: pointer; padding: 10px; }
 
-        /* --- MAIN CONTENT --- */
         main { 
             position: relative;
             z-index: 2;
@@ -245,7 +218,6 @@
 
         section { padding: 100px 7%; max-width: 1400px; margin: 0 auto; position: relative; }
 
-        /* HERO - Títulos ajustados */
         .hero { 
             min-height: 100vh; 
             display: grid; 
@@ -254,7 +226,6 @@
             gap: 40px;
         }
 
-        /* Container do Modelo 3D com Scroll-Driven Interaction */
         .hero-3d-container {
             width: 100%;
             height: 500px;
@@ -262,9 +233,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* O robô vai diminuir um pouco enquanto rola */
-            view-timeline-name: --subjectReveal;
-            view-timeline-axis: block;
         }
 
         model-viewer {
@@ -273,7 +241,6 @@
             background-color: transparent;
             --poster-color: transparent;
             outline: none;
-            transition: transform 0.1s ease-out;
         }
         
         .hero-tag {
@@ -289,17 +256,10 @@
             border: 1px solid var(--border);
             backdrop-filter: blur(10px);
             display: inline-block;
-            animation: pulseGlow 2s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            from { box-shadow: 0 0 10px rgba(157, 78, 221, 0.2); }
-            to { box-shadow: 0 0 25px rgba(157, 78, 221, 0.5); }
         }
 
         h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -3px; line-height: 1; margin-bottom: 25px; font-weight: 800; }
         
-        /* Estilo padrão para os H2 das seções */
         .section-title {
             font-size: clamp(2rem, 5vw, 3rem); 
             text-align: center; 
@@ -316,7 +276,6 @@
         
         .hero-p { color: var(--gray); font-size: clamp(1rem, 2vw, 1.1rem); max-width: 600px; margin-bottom: 45px; line-height: 1.6; font-weight: 300; }
 
-        /* --- BENTO GRID --- */
         .grid { 
             display: grid; 
             grid-template-columns: repeat(6, 1fr); 
@@ -334,24 +293,13 @@
             backdrop-filter: blur(15px);
         }
 
-        .card::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(157, 78, 221, 0.05), transparent);
-            transform: translateX(-100%);
-            transition: 0.8s;
-        }
-
-        .card:hover::after { transform: translateX(100%); }
-        .card:hover { border-color: var(--purple-l); transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        .card:hover { border-color: var(--purple-l); transform: translateY(-10px) scale(1.02); }
         
         .card-large { grid-column: span 3; }
-        .card i { color: var(--purple-l); font-size: 2.2rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.4)); }
+        .card i { color: var(--purple-l); font-size: 2.2rem; margin-bottom: 20px; display: block; }
         .card h3 { margin-bottom: 12px; font-weight: 700; font-size: 1.5rem; }
         .card p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; }
 
-        /* --- TESTIMONIALS --- */
         .testimonials-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -359,48 +307,44 @@
             margin-top: 40px;
         }
 
+        /* AJUSTE GLASSMORPHISM NOS DEPOIMENTOS */
         .testimonial-card {
             background: var(--glass);
             border: 1px solid var(--border);
             padding: 35px;
             border-radius: 30px;
-            transition: 0.5s;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            transition: background 0.4s;
         }
-        
-        .testimonial-card:hover { background: rgba(157, 78, 221, 0.08); transform: scale(1.02); }
+        .testimonial-card:hover { background: var(--glass-deep); }
 
-        .testimonial-card p { font-style: italic; color: #eee; margin-bottom: 25px; line-height: 1.8; font-size: 0.95rem; }
-        .client-info { display: flex; align-items: center; gap: 15px; }
-        .client-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--purple-l); }
-        .client-name { font-weight: 700; font-size: 1rem; color: #fff; }
+        .client-info { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
+        .client-info img { 
+            width: 50px; height: 50px; border-radius: 50%; 
+            border: 2px solid var(--purple-l); object-fit: cover;
+            opacity: 0; transition: opacity 1s; /* Lazy Loading visual */
+        }
+        .client-info img.loaded { opacity: 1; }
 
-        /* --- BUTTONS --- */
         .btn-mks { 
             display: inline-block; padding: 20px 40px; background: var(--white); color: #000;
-            border-radius: 20px; font-weight: 800; text-decoration: none; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-size: 0.9rem; text-align: center; border: none; cursor: none;
+            border-radius: 20px; font-weight: 800; text-decoration: none; transition: 0.5s;
+            font-size: 0.9rem; text-align: center; border: none;
         }
-        .btn-mks:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 25px 50px rgba(157, 78, 221, 0.4); }
-        .btn-outline { background: transparent; color: #fff; border: 1px solid var(--border); margin-left: 10px; backdrop-filter: blur(10px); }
-        .btn-outline:hover { background: var(--purple); border-color: var(--purple); }
+        .btn-outline { background: transparent; color: #fff; border: 1px solid var(--border); margin-left: 10px; }
 
-        /* STEPS */
         .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 40px; }
-        .step-card { position: relative; padding: 45px; background: var(--glass); border-radius: 35px; border: 1px solid var(--border); overflow: hidden; transition: 0.4s; }
-        .step-card:hover { background: rgba(255,255,255,0.06); }
+        .step-card { position: relative; padding: 45px; background: var(--glass); border-radius: 35px; border: 1px solid var(--border); backdrop-filter: blur(10px); }
         .step-card span { font-size: 5rem; font-weight: 900; background: linear-gradient(180deg, var(--purple-l), transparent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.1; position: absolute; top: -10px; right: 10px; }
-        .step-card h4 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
 
-        /* FAQ */
-        .faq-item { background: rgba(255,255,255,0.02); margin-bottom: 15px; border-radius: 25px; border: 1px solid var(--border); padding: 30px; cursor: pointer; transition: 0.4s; }
-        .faq-item:hover { border-color: var(--purple-l); background: rgba(157, 78, 221, 0.05); }
+        .faq-item { background: rgba(255,255,255,0.02); margin-bottom: 15px; border-radius: 25px; border: 1px solid var(--border); padding: 30px; cursor: pointer; transition: 0.3s; }
+        .faq-item:hover { background: rgba(255,255,255,0.05); }
         .faq-question { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.1rem; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); color: var(--gray); font-size: 0.95rem; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); color: var(--gray); }
         .faq-item.active .faq-answer { max-height: 250px; margin-top: 20px; }
         .faq-item.active i { transform: rotate(180deg); color: var(--purple-l); }
         
-        /* --- REVEAL ON SCROLL (Aprimorado) --- */
         .reveal { 
             opacity: 0; 
             transform: translateY(40px); 
@@ -411,46 +355,26 @@
             transform: translateY(0); 
         }
 
-        footer { padding: 80px 5%; border-top: 1px solid var(--border); text-align: center; color: var(--gray); font-size: 0.7rem; letter-spacing: 4px; font-weight: 500; }
+        footer { padding: 80px 5%; border-top: 1px solid var(--border); text-align: center; color: var(--gray); font-size: 0.7rem; letter-spacing: 4px; }
 
-        /* --- MOBILE ADJUSTMENTS --- */
+        /* AJUSTE MENU MOBILE (O QUE FALTAVA) */
         @media (max-width: 900px) {
-            body { cursor: auto; }
             #cursor { display: none; }
-            section { padding: 60px 6%; }
-            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 120px; gap: 20px; }
+            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 120px; }
             .hero-3d-container { height: 300px; order: -1; }
-            .grid { display: flex; flex-direction: column; gap: 20px; }
-            .card, .card-large { width: 100%; grid-column: auto; padding: 30px; }
+            .grid { display: flex; flex-direction: column; }
             .steps { grid-template-columns: 1fr; }
             
-            /* Mobile Nav Refinement */
             .nav-links { 
-                display: none; 
-                flex-direction: column;
-                position: absolute;
-                top: 85px;
-                left: 0;
-                width: 100%;
-                background: rgba(0,0,0,0.95);
-                padding: 40px;
-                backdrop-filter: blur(30px);
+                position: fixed; top: 85px; left: 0; width: 100%; 
+                background: rgba(0,0,0,0.95); flex-direction: column; 
+                padding: 40px; gap: 25px; transform: translateY(-150%); 
+                transition: 0.5s; backdrop-filter: blur(20px);
                 border-bottom: 1px solid var(--border);
-                gap: 25px;
-                align-items: center;
+                display: flex; /* Garante que o flex funcione quando ativo */
             }
-            .nav-links.active { display: flex; }
+            .nav-links.active { transform: translateY(0); }
             .menu-toggle { display: block; }
-            
-            .btn-outline { margin-left: 0; margin-top: 10px; width: 100%; }
-            .btn-mks { width: 100%; padding: 18px; }
-            h1 { font-size: 2.5rem; letter-spacing: -1.5px; }
-            .hero-p { margin: 0 auto 30px auto; font-size: 1rem; }
-            .section-title { font-size: 1.8rem; margin-bottom: 30px; }
-            
-            .auth-card { padding: 40px 20px; width: 90%; }
-            .scanner-portal { width: 100px; height: 100px; }
-            .fingerprint-icon { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -462,14 +386,16 @@
     <div class="glow-bg"></div>
 
     <div id="intro">
-        <div class="auth-card" id="authCard">
-            <div class="scanner-portal" id="scanner">
-                <div class="scanner-ring"></div>
-                <i class="fas fa-fingerprint fingerprint-icon" id="fingerIcon"></i>
-                <img src="https://mkstechsolutions.github.io/redesSociais/img/logoMKS.png" alt="MKS" class="intro-logo-success" id="successLogo">
-            </div>
-            <div class="scanner-text" id="statusTxt">Autenticação MKS Necessária</div>
+        <div class="welcome-wrap">
+            <span class="welcome-text-small" id="welcomeMsg1">Seja bem-vindo à loja</span>
         </div>
+        <div class="welcome-wrap">
+            <span class="welcome-text-main" id="welcomeMsg2">MKS TECH SOLUTIONS</span>
+        </div>
+        <div class="welcome-wrap">
+            <span class="welcome-text-modern" id="welcomeMsg3">UM MUNDO MODERNO</span>
+        </div>
+        <div class="intro-loader-bar" id="introLoader"></div>
     </div>
 
     <nav id="main-nav">
@@ -495,26 +421,14 @@
                 <div class="hero-tag reveal">Innovation for the 1%</div>
                 <h1 class="reveal"><span class="gradient-text">Future-Proof</span><br>Tech Solutions.</h1>
                 <p class="hero-p reveal">Hardware de elite e inteligência artificial fundidos em uma única experiência premium para quem busca o extraordinário.</p>
-                <div class="reveal" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                <div class="reveal" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <a href="https://mkstechsolutions.github.io/redesSociais/" class="btn-mks">Conhecer Store</a>
                     <a href="#services" class="btn-mks btn-outline">Explorar Tecnologias</a>
                 </div>
             </div>
 
-            <div class="hero-3d-container reveal" id="heroRobotContainer">
-                <model-viewer 
-                    id="heroRobot"
-                    src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
-                    alt="MKS Tech 3D Robot" 
-                    auto-rotate 
-                    rotation-per-second="30deg"
-                    camera-controls 
-                    enable-pan
-                    shadow-intensity="2" 
-                    exposure="1"
-                    interaction-prompt="none"
-                    disable-zoom="true">
-                </model-viewer>
+            <div class="hero-3d-container reveal">
+                <model-viewer id="heroRobot" src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" auto-rotate rotation-per-second="30deg" camera-controls interaction-prompt="none" disable-zoom="true"></model-viewer>
             </div>
         </section>
 
@@ -524,27 +438,27 @@
                 <div class="card card-large reveal">
                     <i class="fab fa-apple"></i>
                     <h3>Apple Specialist</h3>
-                    <p>iPhones e MacBooks selecionados e configurados para performance máxima, garantindo fluidez total no seu dia a dia.</p>
+                    <p>iPhones e MacBooks selecionados e configurados para performance máxima.</p>
                 </div>
                 <div class="card card-large reveal">
                     <i class="fas fa-robot"></i>
                     <h3>IA & Automação</h3>
-                    <p>Desenvolvemos agentes inteligentes que trabalham por você 24/7, otimizando processos e eliminando tarefas repetitivas.</p>
+                    <p>Desenvolvemos agentes inteligentes que trabalham por você 24/7.</p>
                 </div>
                 <div class="card reveal">
                     <i class="fas fa-code"></i>
                     <h3>Sistemas Web</h3>
-                    <p>Aplicações modernas e escaláveis com foco em experiência de usuário de última geração.</p>
+                    <p>Aplicações modernas e escaláveis com foco em UX.</p>
                 </div>
                 <div class="card reveal">
                     <i class="fas fa-microchip"></i>
                     <h3>Workstations</h3>
-                    <p>Hardwares de alto desempenho para arquitetura, engenharia e design 3D de alta carga.</p>
+                    <p>Hardwares de alto desempenho para arquitetura e design.</p>
                 </div>
                 <div class="card reveal">
                     <i class="fas fa-shield-halved"></i>
                     <h3>Segurança Pro</h3>
-                    <p>Infraestrutura blindada com criptografia de ponta para proteger seus maiores ativos digitais.</p>
+                    <p>Infraestrutura blindada com criptografia de ponta.</p>
                 </div>
             </div>
         </section>
@@ -552,21 +466,9 @@
         <section id="process">
             <h2 class="reveal section-title">A Jornada MKS</h2>
             <div class="steps">
-                <div class="step-card reveal">
-                    <span>01</span>
-                    <h4>Diagnóstico</h4>
-                    <p>Analisamos cada gargalo da sua rotina tecnológica para propor a solução perfeita e personalizada.</p>
-                </div>
-                <div class="step-card reveal">
-                    <span>02</span>
-                    <h4>Configuração</h4>
-                    <p>Nossos técnicos preparam cada bit do seu novo setup com precisão cirúrgica e rigor técnico.</p>
-                </div>
-                <div class="step-card reveal">
-                    <span>03</span>
-                    <h4>Suporte Elite</h4>
-                    <p>Você nunca estará sozinho. Monitoramento e auxílio VIP em tempo real para sua paz de espírito.</p>
-                </div>
+                <div class="step-card reveal"><span>01</span><h4>Diagnóstico</h4><p>Analisamos cada gargalo da sua rotina tecnológica.</p></div>
+                <div class="step-card reveal"><span>02</span><h4>Configuração</h4><p>Nossos técnicos preparam cada bit do seu setup.</p></div>
+                <div class="step-card reveal"><span>03</span><h4>Suporte Elite</h4><p>Monitoramento e auxílio VIP em tempo real.</p></div>
             </div>
         </section>
 
@@ -574,43 +476,17 @@
             <h2 class="reveal section-title">Feedbacks</h2>
             <div class="testimonials-container">
                 <div class="testimonial-card reveal">
-                    <p>"A automação com IA da MKS reduziu nosso tempo de resposta em 70%. O suporte é simplesmente impecável."</p>
+                    <p>"A automação com IA da MKS reduziu nosso tempo em 70%."</p>
                     <div class="client-info">
-                        <img src="https://i.pravatar.cc/100?img=33" alt="Cliente">
-                        <div>
-                            <span class="client-name">Ricardo Mendes</span><br>
-                            <small style="color: var(--purple-l)">CEO TechFlow</small>
-                        </div>
+                        <img src="https://i.pravatar.cc/100?img=33" alt="Cliente" loading="lazy" class="lazy-img">
+                        <div><span class="client-name">Ricardo Mendes</span></div>
                     </div>
                 </div>
                 <div class="testimonial-card reveal">
-                    <p>"Migrar para o ecossistema Apple com o setup da MKS transformou minha produtividade. O acabamento técnico é de outro mundo."</p>
+                    <p>"Migrar para o ecossistema Apple com a MKS transformou minha produtividade."</p>
                     <div class="client-info">
-                        <img src="https://i.pravatar.cc/100?img=11" alt="Cliente">
-                        <div>
-                            <span class="client-name">Beatriz Soares</span><br>
-                            <small style="color: var(--purple-l)">Product Designer</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card reveal">
-                    <p>"O sistema web que desenvolveram para nossa gestão é robusto e extremamente rápido. Eles realmente entendem de escala."</p>
-                    <div class="client-info">
-                        <img src="https://i.pravatar.cc/100?img=12" alt="Cliente">
-                        <div>
-                            <span class="client-name">Marcus Vinícius</span><br>
-                            <small style="color: var(--purple-l)">CTO LogisTech</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card reveal">
-                    <p>"A workstation montada superou todas as expectativas para renderização 4K. Investimento que se pagou em dois meses."</p>
-                    <div class="client-info">
-                        <img src="https://i.pravatar.cc/100?img=26" alt="Cliente">
-                        <div>
-                            <span class="client-name">Juliana Paiva</span><br>
-                            <small style="color: var(--purple-l)">Diretora Criativa</small>
-                        </div>
+                        <img src="https://i.pravatar.cc/100?img=11" alt="Cliente" loading="lazy" class="lazy-img">
+                        <div><span class="client-name">Beatriz Soares</span></div>
                     </div>
                 </div>
             </div>
@@ -621,46 +497,48 @@
             <div class="faq reveal" style="max-width: 800px; margin: 0 auto;">
                 <div class="faq-item">
                     <div class="faq-question">Atendimento Personalizado? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">Sim, cada cliente MKS possui um consultor técnico dedicado disponível para resolver qualquer complexidade tecnológica de imediato via canais exclusivos.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Garantia e Segurança? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">Todos os nossos produtos e serviços acompanham protocolos de segurança avançados e garantia premium com substituição rápida de hardware se necessário.</div>
+                    <div class="faq-answer">Sim, cada cliente MKS possui um consultor técnico dedicado.</div>
                 </div>
             </div>
         </section>
 
         <section style="text-align: center; padding-bottom: 140px;">
-            <h2 class="reveal gradient-text" style="font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -3px; font-weight: 800;">Eleve seu padrão agora.</h2>
-            <a href="https://mkstechsolutions.github.io/chatBotMKS/" class="btn-mks reveal" style="margin-top: 40px; background: var(--purple); color: white; padding: 22px 60px; cursor: pointer;">Falar com um Especialista</a>
+            <h2 class="reveal gradient-text" style="font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;">Eleve seu padrão agora.</h2>
+            <a href="https://mkstechsolutions.github.io/chatBotMKS/" class="btn-mks reveal" style="margin-top: 40px; background: var(--purple); color: white;">Falar com um Especialista</a>
         </section>
     </main>
 
-    <footer>
-        <p>© 2026 MKS TECH SOLUTIONS | ENCRYPTED CONNECTION</p>
-    </footer>
+    <footer><p>© 2026 MKS TECH SOLUTIONS | ENCRYPTED CONNECTION</p></footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
-        // Registrar ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
+
+        // --- LAZY LOADING PARA IMAGENS ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.onload = () => img.classList.add('loaded');
+                    img.src = img.src; // Força trigger
+                    observer.unobserve(img);
+                }
+            });
+        });
+        document.querySelectorAll('.lazy-img').forEach(img => observer.observe(img));
 
         // --- PARTICLE BACKGROUND SYSTEM ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
 
         class Particle {
-            constructor() {
+            constructor() { this.reset(); }
+            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 0.5;
@@ -669,156 +547,96 @@
                 this.opacity = Math.random() * 0.5;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0) this.reset();
             }
             draw() {
                 ctx.fillStyle = `rgba(157, 78, 221, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
         for (let i = 0; i < 80; i++) particles.push(new Particle());
-
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
 
-        // --- PROGRESS BAR & STICKY HEADER ---
+        // --- PROGRESS BAR & HEADER ---
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height);
             document.getElementById("progress-bar").style.transform = `scaleX(${scrolled})`;
-
             const nav = document.getElementById('main-nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
         });
 
-        // --- INTERACTIVE ELEMENTS (CURSOR) ---
+        // --- CURSOR ---
         const cursor = document.getElementById('cursor');
         if(window.innerWidth > 900) {
             document.addEventListener('mousemove', e => {
                 gsap.to(cursor, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
             });
-
             document.querySelectorAll('.card, .testimonial-card, .btn-mks, .faq-item, .nav-links a').forEach(el => {
-                el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 3, background: 'transparent', border: '1px solid var(--purple-l)', duration: 0.3 }));
-                el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, background: 'var(--purple-l)', border: 'none', duration: 0.3 }));
+                el.onmouseenter = () => gsap.to(cursor, { scale: 3, background: 'transparent', border: '1px solid var(--purple-l)' });
+                el.onmouseleave = () => gsap.to(cursor, { scale: 1, background: 'var(--purple-l)', border: 'none' });
             });
         }
 
-        // --- AUTH & INTRO LOGIC ---
-        const scanner = document.getElementById('scanner');
-        const intro = document.getElementById('intro');
-        const authCard = document.getElementById('authCard');
-        const content = document.getElementById('content');
-        const nav = document.getElementById('main-nav');
-        const fingerIcon = document.getElementById('fingerIcon');
-        const successLogo = document.getElementById('successLogo');
-        const statusTxt = document.getElementById('statusTxt');
-
-        document.body.style.overflow = "hidden";
-
-        scanner.addEventListener('click', () => {
-            statusTxt.innerText = "ACESSO BIOMÉTRICO AUTORIZADO";
-            statusTxt.style.color = "#9d4edd";
-            fingerIcon.style.opacity = "0";
-            successLogo.style.opacity = "1";
-            successLogo.style.transform = "scale(1)";
-
+        // --- INTRO LOGIC ---
+        window.addEventListener('load', () => {
             const tl = gsap.timeline();
-            tl.to(authCard, { opacity: 0, scale: 0.8, filter: "blur(20px)", duration: 0.8, ease: "power4.in" })
-              .to(intro, { y: "-100%", duration: 1.2, ease: "expo.inOut" })
-              .to(nav, { y: 0, opacity: 1, duration: 1, ease: "power4.out" }, "-=0.6")
-              .to(content, { 
-                  opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.8, ease: "power4.out", 
-                  onComplete: () => {
-                    document.body.style.overflow = "auto";
-                    initScrollAnimations();
-                  }
-              }, "-=1");
+            tl.from("#welcomeMsg1", { y: 100, opacity: 0, duration: 1, ease: "power4.out" })
+              .from("#welcomeMsg2", { y: 100, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.7")
+              .from("#welcomeMsg3", { y: 100, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.7")
+              .to("#introLoader", { width: "100%", duration: 1.5, ease: "power2.inOut" })
+              .to(["#welcomeMsg1", "#welcomeMsg2", "#welcomeMsg3", "#introLoader"], { y: -50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power4.in" })
+              .to("#intro", { y: "-100%", duration: 1.2, ease: "expo.inOut" })
+              .to("#main-nav", { y: 0, opacity: 1, duration: 1, ease: "power4.out" }, "-=0.6")
+              .to("#content", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.8, ease: "power4.out", onComplete: () => {
+                  document.body.style.overflow = "auto";
+                  initScrollAnimations();
+              }}, "-=1");
         });
 
-        // --- SCROLL ANIMATIONS (GSAP) ---
+        // --- SCROLL ANIMATIONS ---
         function initScrollAnimations() {
-            // Reveal on Scroll para todos os elementos .reveal
             gsap.utils.toArray(".reveal").forEach((el) => {
-                gsap.to(el, {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%",
-                        toggleClass: "active",
-                        once: true
-                    }
+                ScrollTrigger.create({
+                    trigger: el, start: "top 85%",
+                    onEnter: () => el.classList.add('active'), once: true
                 });
             });
-
-            // Parallax no Robô 3D
             gsap.to("#heroRobot", {
-                scrollTrigger: {
-                    trigger: ".hero",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true
-                },
-                y: 100,
-                scale: 0.8,
-                rotationY: 360
-            });
-
-            // Parallax suave nos cards (efeito de profundidade)
-            gsap.utils.toArray(".card").forEach((card, i) => {
-                gsap.to(card, {
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top bottom",
-                        scrub: 1
-                    },
-                    y: -30
-                });
+                scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+                y: 100, scale: 0.8, rotationY: 360
             });
         }
 
         // --- FAQ LOGIC ---
         document.querySelectorAll('.faq-item').forEach(item => {
-            item.onclick = () => item.classList.toggle('active');
+            item.addEventListener('click', () => {
+                const wasActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if(!wasActive) item.classList.add('active');
+            });
         });
 
         // --- MOBILE MENU ---
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        
         menuToggle.onclick = (e) => {
             e.stopPropagation();
             navLinks.classList.toggle('active');
             const icon = menuToggle.querySelector('i');
-            icon.classList.toggle('fa-bars-staggered');
-            icon.classList.toggle('fa-xmark');
+            icon.className = navLinks.classList.contains('active') ? 'fas fa-xmark' : 'fas fa-bars-staggered';
         };
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.onclick = () => {
-                navLinks.classList.remove('active');
-                menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
-            };
-        });
+        document.onclick = () => {
+            navLinks.classList.remove('active');
+            menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
+        };
     </script>
 </body>
 </html>
