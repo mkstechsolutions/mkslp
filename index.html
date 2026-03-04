@@ -40,9 +40,10 @@
             overflow-x: hidden; 
             -webkit-font-smoothing: antialiased;
             cursor: none;
+            overflow: hidden; /* Travado até a intro acabar */
         }
 
-        /* --- ESTILOS DA NOVA INTRO (MUNDO MODERNO) --- */
+        /* --- ESTILOS DA INTRO --- */
         #intro {
             position: fixed;
             inset: 0;
@@ -92,7 +93,7 @@
             box-shadow: 0 0 20px var(--purple-l);
         }
 
-        /* --- SEU CSS ORIGINAL ABAIXO (MANTIDO 100%) --- */
+        /* --- UI ELEMENTS --- */
         #progress-bar {
             position: fixed;
             top: 0; left: 0;
@@ -133,6 +134,7 @@
             pointer-events: none;
         }
 
+        /* --- NAVIGATION --- */
         #main-nav {
             position: fixed;
             top: 0; width: 100%; height: 85px;
@@ -207,6 +209,7 @@
 
         .menu-toggle { display: none; color: var(--white); font-size: 1.3rem; cursor: pointer; padding: 10px; }
 
+        /* --- MAIN CONTENT --- */
         main { 
             position: relative;
             z-index: 2;
@@ -307,7 +310,6 @@
             margin-top: 40px;
         }
 
-        /* AJUSTE GLASSMORPHISM NOS DEPOIMENTOS */
         .testimonial-card {
             background: var(--glass);
             border: 1px solid var(--border);
@@ -323,7 +325,7 @@
         .client-info img { 
             width: 50px; height: 50px; border-radius: 50%; 
             border: 2px solid var(--purple-l); object-fit: cover;
-            opacity: 0; transition: opacity 1s; /* Lazy Loading visual */
+            opacity: 0; transition: opacity 0.5s; 
         }
         .client-info img.loaded { opacity: 1; }
 
@@ -357,9 +359,10 @@
 
         footer { padding: 80px 5%; border-top: 1px solid var(--border); text-align: center; color: var(--gray); font-size: 0.7rem; letter-spacing: 4px; }
 
-        /* AJUSTE MENU MOBILE (O QUE FALTAVA) */
+        /* --- RESPONSIVIDADE --- */
         @media (max-width: 900px) {
             #cursor { display: none; }
+            body { cursor: default; }
             .hero { grid-template-columns: 1fr; text-align: center; padding-top: 120px; }
             .hero-3d-container { height: 300px; order: -1; }
             .grid { display: flex; flex-direction: column; }
@@ -371,10 +374,13 @@
                 padding: 40px; gap: 25px; transform: translateY(-150%); 
                 transition: 0.5s; backdrop-filter: blur(20px);
                 border-bottom: 1px solid var(--border);
-                display: flex; /* Garante que o flex funcione quando ativo */
+                display: flex;
             }
             .nav-links.active { transform: translateY(0); }
             .menu-toggle { display: block; }
+            .hero-p { margin: 0 auto 45px; }
+            .btn-outline { margin-left: 0; width: 100%; margin-top: 10px; }
+            .btn-mks { width: 100%; }
         }
     </style>
 </head>
@@ -478,14 +484,14 @@
                 <div class="testimonial-card reveal">
                     <p>"A automação com IA da MKS reduziu nosso tempo em 70%."</p>
                     <div class="client-info">
-                        <img src="https://i.pravatar.cc/100?img=33" alt="Cliente" loading="lazy" class="lazy-img">
+                        <img src="https://i.pravatar.cc/100?img=33" alt="Cliente" class="lazy-img">
                         <div><span class="client-name">Ricardo Mendes</span></div>
                     </div>
                 </div>
                 <div class="testimonial-card reveal">
                     <p>"Migrar para o ecossistema Apple com a MKS transformou minha produtividade."</p>
                     <div class="client-info">
-                        <img src="https://i.pravatar.cc/100?img=11" alt="Cliente" loading="lazy" class="lazy-img">
+                        <img src="https://i.pravatar.cc/100?img=11" alt="Cliente" class="lazy-img">
                         <div><span class="client-name">Beatriz Soares</span></div>
                     </div>
                 </div>
@@ -497,7 +503,7 @@
             <div class="faq reveal" style="max-width: 800px; margin: 0 auto;">
                 <div class="faq-item">
                     <div class="faq-question">Atendimento Personalizado? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">Sim, cada cliente MKS possui um consultor técnico dedicado.</div>
+                    <div class="faq-answer">Sim, cada cliente MKS possui um consultor técnico dedicado disponível para chamados prioritários.</div>
                 </div>
             </div>
         </section>
@@ -516,25 +522,29 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // --- LAZY LOADING PARA IMAGENS ---
+        // --- LAZY LOADING ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
                     img.onload = () => img.classList.add('loaded');
-                    img.src = img.src; // Força trigger
+                    img.src = img.getAttribute('src');
                     observer.unobserve(img);
                 }
             });
         });
         document.querySelectorAll('.lazy-img').forEach(img => observer.observe(img));
 
-        // --- PARTICLE BACKGROUND SYSTEM ---
+        // --- PARTICLE BACKGROUND ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
+        function resize() { 
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight; 
+        }
+        window.addEventListener('resize', resize); 
+        resize();
 
         class Particle {
             constructor() { this.reset(); }
@@ -555,7 +565,7 @@
                 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-        for (let i = 0; i < 80; i++) particles.push(new Particle());
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
@@ -563,55 +573,66 @@
         }
         animateParticles();
 
-        // --- PROGRESS BAR & HEADER ---
+        // --- SCROLL UI ---
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height);
             document.getElementById("progress-bar").style.transform = `scaleX(${scrolled})`;
+            
             const nav = document.getElementById('main-nav');
             window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
         });
 
-        // --- CURSOR ---
+        // --- CURSOR CUSTOM ---
         const cursor = document.getElementById('cursor');
         if(window.innerWidth > 900) {
             document.addEventListener('mousemove', e => {
                 gsap.to(cursor, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
             });
-            document.querySelectorAll('.card, .testimonial-card, .btn-mks, .faq-item, .nav-links a').forEach(el => {
+            document.querySelectorAll('.card, .testimonial-card, .btn-mks, .faq-item, .nav-links a, .nav-brand').forEach(el => {
                 el.onmouseenter = () => gsap.to(cursor, { scale: 3, background: 'transparent', border: '1px solid var(--purple-l)' });
                 el.onmouseleave = () => gsap.to(cursor, { scale: 1, background: 'var(--purple-l)', border: 'none' });
             });
         }
 
-        // --- INTRO LOGIC ---
+        // --- INTRO SEQUENCE ---
         window.addEventListener('load', () => {
             const tl = gsap.timeline();
-            tl.from("#welcomeMsg1", { y: 100, opacity: 0, duration: 1, ease: "power4.out" })
-              .from("#welcomeMsg2", { y: 100, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.7")
-              .from("#welcomeMsg3", { y: 100, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.7")
-              .to("#introLoader", { width: "100%", duration: 1.5, ease: "power2.inOut" })
-              .to(["#welcomeMsg1", "#welcomeMsg2", "#welcomeMsg3", "#introLoader"], { y: -50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power4.in" })
-              .to("#intro", { y: "-100%", duration: 1.2, ease: "expo.inOut" })
-              .to("#main-nav", { y: 0, opacity: 1, duration: 1, ease: "power4.out" }, "-=0.6")
-              .to("#content", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.8, ease: "power4.out", onComplete: () => {
+            tl.from("#welcomeMsg1", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" })
+              .from("#welcomeMsg2", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
+              .from("#welcomeMsg3", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
+              .to("#introLoader", { width: "100%", duration: 1.2, ease: "power2.inOut" })
+              .to(["#welcomeMsg1", "#welcomeMsg2", "#welcomeMsg3", "#introLoader"], { y: -30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power4.in" })
+              .to("#intro", { y: "-100%", duration: 1, ease: "expo.inOut" })
+              .to("#main-nav", { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, "-=0.4")
+              .to("#content", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.2, ease: "power4.out", onComplete: () => {
                   document.body.style.overflow = "auto";
                   initScrollAnimations();
-              }}, "-=1");
+              }}, "-=0.8");
         });
 
         // --- SCROLL ANIMATIONS ---
         function initScrollAnimations() {
             gsap.utils.toArray(".reveal").forEach((el) => {
                 ScrollTrigger.create({
-                    trigger: el, start: "top 85%",
-                    onEnter: () => el.classList.add('active'), once: true
+                    trigger: el, 
+                    start: "top 90%",
+                    onEnter: () => el.classList.add('active'), 
+                    once: true
                 });
             });
+
             gsap.to("#heroRobot", {
-                scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
-                y: 100, scale: 0.8, rotationY: 360
+                scrollTrigger: { 
+                    trigger: ".hero", 
+                    start: "top top", 
+                    end: "bottom top", 
+                    scrub: true 
+                },
+                y: 150, 
+                rotationY: 180,
+                scale: 0.7
             });
         }
 
@@ -627,16 +648,26 @@
         // --- MOBILE MENU ---
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        menuToggle.onclick = (e) => {
+        
+        menuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             navLinks.classList.toggle('active');
             const icon = menuToggle.querySelector('i');
             icon.className = navLinks.classList.contains('active') ? 'fas fa-xmark' : 'fas fa-bars-staggered';
-        };
-        document.onclick = () => {
+        });
+
+        // Fecha ao clicar fora ou em links
+        document.addEventListener('click', () => {
             navLinks.classList.remove('active');
             menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
-        };
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
+            });
+        });
     </script>
 </body>
 </html>
