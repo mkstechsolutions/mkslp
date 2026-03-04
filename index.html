@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MKS Tech Solutions | Premium Experience</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <style>
         :root {
@@ -17,7 +19,6 @@
             --purple-l: #9d4edd;
             --white: #ffffff;
             --gray: #a1a1a6;
-            /* Glassmorphism Refinado */
             --glass: rgba(255, 255, 255, 0.02);
             --glass-deep: rgba(255, 255, 255, 0.05);
             --border: rgba(157, 78, 221, 0.2);
@@ -112,8 +113,10 @@
             pointer-events: none;
             z-index: 10000;
             backdrop-filter: blur(4px);
-            transition: transform 0.1s ease-out;
             box-shadow: 0 0 20px var(--purple), 0 0 40px var(--purple-l);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #bg-canvas {
@@ -393,13 +396,13 @@
 
     <div id="intro">
         <div class="welcome-wrap">
-            <span class="welcome-text-small" id="welcomeMsg1">Seja bem-vindo à loja</span>
+            <span class="welcome-text-small">Seja bem-vindo à loja</span>
         </div>
         <div class="welcome-wrap">
-            <span class="welcome-text-main" id="welcomeMsg2">MKS TECH SOLUTIONS</span>
+            <span class="welcome-text-main">MKS TECH SOLUTIONS</span>
         </div>
         <div class="welcome-wrap">
-            <span class="welcome-text-modern" id="welcomeMsg3">UM MUNDO MODERNO</span>
+            <span class="welcome-text-modern">UM MUNDO MODERNO</span>
         </div>
         <div class="intro-loader-bar" id="introLoader"></div>
     </div>
@@ -416,7 +419,7 @@
             <a href="#process">Processo</a>
             <a href="#testimonials">Feedbacks</a>
             <a href="#faq">Suporte</a>
-            <a href="https://mkstechsolutions.github.io/redesSociais/">Contato</a>
+            <a href="https://mkstechsolutions.github.io/redesSociais/" target="_blank">Contato</a>
         </div>
         <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars-staggered"></i></div>
     </nav>
@@ -434,7 +437,14 @@
             </div>
 
             <div class="hero-3d-container reveal">
-                <model-viewer id="heroRobot" src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" auto-rotate rotation-per-second="30deg" camera-controls interaction-prompt="none" disable-zoom="true"></model-viewer>
+                <model-viewer id="heroRobot" 
+                    src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
+                    auto-rotate 
+                    rotation-per-second="30deg" 
+                    camera-controls 
+                    interaction-prompt="none" 
+                    disable-zoom="true">
+                </model-viewer>
             </div>
         </section>
 
@@ -516,9 +526,6 @@
 
     <footer><p>© 2026 MKS TECH SOLUTIONS | ENCRYPTED CONNECTION</p></footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
@@ -539,6 +546,7 @@
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
+        
         function resize() { 
             canvas.width = window.innerWidth; 
             canvas.height = window.innerHeight; 
@@ -566,6 +574,7 @@
             }
         }
         for (let i = 0; i < 60; i++) particles.push(new Particle());
+        
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
@@ -584,26 +593,39 @@
             window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
         });
 
-        // --- CURSOR CUSTOM ---
+        // --- CURSOR CUSTOM (Smoothing) ---
         const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
         if(window.innerWidth > 900) {
             document.addEventListener('mousemove', e => {
-                gsap.to(cursor, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
+                mouseX = e.clientX;
+                mouseY = e.clientY;
             });
+
+            const renderCursor = () => {
+                cursorX += (mouseX - cursorX) * 0.1;
+                cursorY += (mouseY - cursorY) * 0.1;
+                cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
+                requestAnimationFrame(renderCursor);
+            };
+            renderCursor();
+
             document.querySelectorAll('.card, .testimonial-card, .btn-mks, .faq-item, .nav-links a, .nav-brand').forEach(el => {
-                el.onmouseenter = () => gsap.to(cursor, { scale: 3, background: 'transparent', border: '1px solid var(--purple-l)' });
-                el.onmouseleave = () => gsap.to(cursor, { scale: 1, background: 'var(--purple-l)', border: 'none' });
+                el.onmouseenter = () => gsap.to(cursor, { scale: 3, background: 'transparent', border: '1px solid var(--purple-l)', duration: 0.3 });
+                el.onmouseleave = () => gsap.to(cursor, { scale: 1, background: 'var(--purple-l)', border: 'none', duration: 0.3 });
             });
         }
 
         // --- INTRO SEQUENCE ---
         window.addEventListener('load', () => {
             const tl = gsap.timeline();
-            tl.from("#welcomeMsg1", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" })
-              .from("#welcomeMsg2", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
-              .from("#welcomeMsg3", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
+            tl.from(".welcome-text-small", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" })
+              .from(".welcome-text-main", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
+              .from(".welcome-text-modern", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.5")
               .to("#introLoader", { width: "100%", duration: 1.2, ease: "power2.inOut" })
-              .to(["#welcomeMsg1", "#welcomeMsg2", "#welcomeMsg3", "#introLoader"], { y: -30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power4.in" })
+              .to(["#intro span", "#introLoader"], { y: -30, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power4.in" })
               .to("#intro", { y: "-100%", duration: 1, ease: "expo.inOut" })
               .to("#main-nav", { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, "-=0.4")
               .to("#content", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.2, ease: "power4.out", onComplete: () => {
@@ -656,17 +678,9 @@
             icon.className = navLinks.classList.contains('active') ? 'fas fa-xmark' : 'fas fa-bars-staggered';
         });
 
-        // Fecha ao clicar fora ou em links
         document.addEventListener('click', () => {
             navLinks.classList.remove('active');
             menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
-            });
         });
     </script>
 </body>
