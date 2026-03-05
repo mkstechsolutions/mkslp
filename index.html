@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Landing - MKS</title>
+    <title>MKS Tech Solutions | Premium Experience</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -190,8 +190,6 @@
 
         #logmks { border-radius: 5px;}
 
-        
-        
         .nav-links { display: flex; gap: 35px; }
         .nav-links a { 
             color: var(--gray); 
@@ -297,13 +295,14 @@
             background: var(--card-bg); 
             border: 1px solid var(--border); 
             padding: 40px; border-radius: 35px; 
-            transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: border-color 0.4s, background 0.4s; /* Removido transform e cubic-bezier do hover */
             position: relative; overflow: hidden;
             grid-column: span 2;
             backdrop-filter: blur(15px);
         }
 
-        .card:hover { border-color: var(--purple-l); transform: translateY(-10px) scale(1.02); }
+        /* Removido o efeito de translateY e Scale no hover para evitar o bug */
+        .card:hover { border-color: var(--purple-l); }
         
         .card-large { grid-column: span 3; }
         .card i { color: var(--purple-l); font-size: 2.2rem; margin-bottom: 20px; display: block; }
@@ -392,13 +391,11 @@
     </style>
 </head>
 
-    <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T9ZSLYS1ZE"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-T9ZSLYS1ZE');
 </script>
 
@@ -443,7 +440,7 @@
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-tag reveal">A TECNOLOGIA PARA O PRÓXIMO NÍVEL</div>
-                <h1 class="reveal"><span class="gradient-text"><span class="gradient-text">Performance </span><br>Sem Limites.<br>Tech Solutions.</h1>
+                <h1 class="reveal"><span class="gradient-text">Performance</span><br>Sem Limites.</h1>
                 <p class="hero-p reveal">Elevamos sua produtividade com hardware de elite e ecossistemas inteligentes. Onde a sofisticação encontra o poder de processamento.</p>
                 <div class="reveal" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <a href="https://mkstechsolutions.github.io/redesSociais/" class="btn-mks">Conhecer Store</a>
@@ -516,15 +513,12 @@
                 <div class="testimonial-card reveal">
                     <p>"Migrar para o ecossistema Apple com a MKS transformou minha produtividade."</p>
                     <div class="client-info">
-                        <img src="data:image/jpeg;base64,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" alt="Cliente" class="lazy-img">
+                        <img src="https://i.pravatar.cc/100?img=26" alt="Cliente" class="lazy-img">
                         <div><span class="client-name">Beatriz Soares</span></div>
                     </div>
                 </div>
             </div>
-
         </section>
-
-    
 
         <section id="faq">
             <h2 class="reveal section-title">Suporte MKS</h2>
@@ -533,16 +527,12 @@
                     <div class="faq-question">Como inicio minha experiência MKS? <i class="fas fa-chevron-down"></i></div>
                     <div class="faq-answer">Através do nosso ecossistema de atendimento, onde analisamos seu perfil e direcionamos para a solução ideal, seja em hardware ou software.</div>
                 </div>
-
                 <div class="faq-item">
                     <div class="faq-question">O que define o suporte personalizado? <i class="fas fa-chevron-down"></i></div>
                     <div class="faq-answer">Prioridade absoluta. Você terá acesso direto a especialistas para garantir que sua infraestrutura opere em nível máximo 24/7.</div>
                 </div>
-
             </div>
         </section>
-
-        
 
         <section style="text-align: center; padding-bottom: 140px;">
             <h2 class="reveal gradient-text" style="font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;">Pronto para o extraordinário?</h2>
@@ -619,7 +609,7 @@
             window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
         });
 
-        // --- CURSOR CUSTOM (Smoothing) ---
+        // --- CURSOR CUSTOM ---
         const cursor = document.getElementById('cursor');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
@@ -705,7 +695,9 @@
 
         document.addEventListener('click', () => {
             navLinks.classList.remove('active');
-            menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
+            if (menuToggle.querySelector('i')) {
+                menuToggle.querySelector('i').className = 'fas fa-bars-staggered';
+            }
         });
     </script>
 </body>
